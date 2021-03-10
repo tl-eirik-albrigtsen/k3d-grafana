@@ -22,6 +22,7 @@ Cloud managed grafana
 - agent as metric scraper (prometheus)
 - agent as log ingestor (loki)
 - agent as tracing ingestor (tempo)
+- https://github.com/tl-eirik-albrigtsen/k3d-grafana
 
 NOTES:
 - with a focus on debuggability + discoverability

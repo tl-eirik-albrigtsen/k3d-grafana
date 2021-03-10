@@ -80,6 +80,5 @@ Official otel demo with exemplars (doesn't work) + my rust controller with traci
 
 ```
 k apply -f otel-demo-go.yml
-k apply -f foo-crd.yml
 k apply -f foo-controller.yml
 ```
