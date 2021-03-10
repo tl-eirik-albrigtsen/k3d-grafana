@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: debugger
+  namespace: default
+spec:
+  minReadySeconds: 10
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      name: debugger
+  template:
+    metadata:
+      labels:
+        name: debugger
+    spec:
+      containers:
+      - args:
+        - Infinity
+        command:
+        - sleep
+        image: tracing-example:latest
+        imagePullPolicy: IfNotPresent
+        name: debugger

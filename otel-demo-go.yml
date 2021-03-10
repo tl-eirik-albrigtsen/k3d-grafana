@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: otel-example
+  namespace: default
+  labels:
+    app: otel-example
+spec:
+  minReadySeconds: 10
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: otel-example
+  template:
+    metadata:
+      labels:
+        app: otel-example
+    spec:
+      containers:
+      - name: otel-example
+        image: clux/otel-tracing-go:0.2.0
+        imagePullPolicy: Always
+        env:
+        - name: OPENTELEMETRY_ENDPOINT_URL
+          value: "grafana-agent-traces.monitoring.svc.cluster.local:55680"
+        readinessProbe:
+          httpGet:
+            path: /metrics
+            port: http
+          timeoutSeconds: 5
+        ports:
+        - containerPort: 8000
+          name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: otel-example
+  name: otel-example
+  namespace: default
+spec:
+  ports:
+  - name: http
+    port: 8000
+    targetPort: 8000
+  selector:
+    app: otel-example
